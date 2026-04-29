@@ -41,9 +41,12 @@ public class AppUser implements UserDetails {
      * Un usuario -> un role
      * Roles guardados con prefijo ROLE_
      */
-    // PENDIENTE COMPROBAR POR QUÉ ES NECESARIO EAGER!!! LO NECESITABA SPRING SECURITY!!!
-    //@ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+
+    // POR QUÉ ES NECESARIO EAGER????? LO NECESITABA SPRING SECURITY!!!
+    // org.hibernate.LazyInitializationException: Could not initialize proxy [es.daw.extra_peliculas_mvc.entity.Role#1]
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
