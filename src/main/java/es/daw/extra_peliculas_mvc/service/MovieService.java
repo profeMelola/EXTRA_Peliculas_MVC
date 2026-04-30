@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +19,13 @@ public class MovieService {
         return apiClient.getAllMovies();
     }
 
-    public MovieResponseDto getMovieById(Long id) {
-        return apiClient.getMovieById(id);
+    public Optional<MovieResponseDto> getMovieById(Long id) {
+
+        return Optional.ofNullable(apiClient.getMovieById(id));
     }
 
-    public MovieWithCastDto getCastByMovieId(Long id) {
-        return apiClient.getMovieWithCast(id);
+    public Optional<MovieWithCastDto> getCastByMovieId(Long id) {
+
+        return Optional.ofNullable(apiClient.getMovieWithCast(id));
     }
 }

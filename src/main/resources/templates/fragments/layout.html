@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineApp</title>
+    <title th:text="${title} + '- CineApp'"></title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -298,24 +298,32 @@
      FRAGMENTO: nav  (th:fragment="nav")
      ═══════════════════════════════════════════ -->
 <nav th:fragment="nav">
-    <a href="/movies" class="nav-brand">&#9654; Cine<span>App</span></a>
+    <a th:href="@{/movies}" class="nav-brand">&#9654; Cine<span>App</span></a>
 
     <ul class="nav-links">
-        <li><a href="/movies" class="active">Películas</a></li>
+        <li><a th:href="@{/movies}" class="active">Películas</a></li>
         <!-- Solo visible para rol ADMIN -->
-        <li>
-            <a href="/admin/users">
+        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <a th:href="@{/admin/users}">
                 Admin <span class="nav-badge">ADMIN</span>
             </a>
         </li>
         <!-- Solo visible para rol USER -->
-        <li><a href="/favorites">Favoritos</a></li>
+        <li th:if="${#authorization.expression('hasRole(''USER'')')}">
+            <a th:href="@{/favorites}">Favoritos</a>
+        </li>
     </ul>
 
     <div class="nav-appUser">
         <!-- Nombre del usuario en sesión -->
-        Hola, <strong>admin</strong>
-        <a th:href="@{/logout}" class="btn-logout">Salir</a>
+        Hola, <strong th:text="${#authentication.name}">XXX</strong>
+
+<!--        <a th:href="@{/logout}" class="btn-logout">Salir</a>-->
+        <form th:action="@{/logout}" method="post" style="margin:0">
+            <button type="submit" class="btn-logout">Salir</button>
+        </form>
+
+
     </div>
 </nav>
 
@@ -323,10 +331,10 @@
      FRAGMENTO: main (th:fragment="layout(content)")
      El contenido de cada página va aquí dentro
      ═══════════════════════════════════════════ -->
-<main th:fragment="layout(content)">
-    <!-- El contenido de cada página va aquí -->
-    <p style="color: var(--text-muted); font-style: italic;">[ Contenido de la página ]</p>
-</main>
+<!--<main th:fragment="layout(content)">-->
+<!--    &lt;!&ndash; El contenido de cada página va aquí &ndash;&gt;-->
+<!--    <p style="color: var(&#45;&#45;text-muted); font-style: italic;">[ Contenido de la página ]</p>-->
+<!--</main>-->
 
 <!-- ═══════════════════════════════════════════
      FRAGMENTO: footer (th:fragment="footer")
